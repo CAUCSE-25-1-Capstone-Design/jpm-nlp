@@ -19,9 +19,31 @@ def query_process(query):
     input_messages=[{"role": "system", 
                      "content": '''
                     너는 사용자의 자연어 명령을 받아 알맞은 java 함수(tool)를 호출하는 시스템이다. 
-                    만약 패키지명이 완전하지 않다면 maven central에서 가장 유사한 패키지명으로 검색해.
-                    또한 패키지를 설치할 때 패키지를 배포한 기관명(organization)을 maven central에서 검색해.
-                    패키지의 버전은 maven central 에서 해당 패키지의 버전을 가져와.
+                    너는 사용자의 자연어 명령을 받아 해당 명령을 수행하기 위해 알맞은 Java 함수(tool)를 호출하는 시스템이다.
+
+                    다음 규칙을 반드시 따르도록 한다:
+
+                    1. 사용자가 패키지를 **설치하라고 요청**할 경우:
+                    - 먼저 **Maven Central**에서 검색하여 정확한 `패키지 이름(name)`과 `배포 기관명(organization)`을 확인한다.
+                    - 이를 기반으로 `install` 함수를 호출한다.
+
+                    2. 사용자가 패키지를 **삭제하거나 업데이트하라고 요청**할 경우:
+                    - 현재 설치된 패키지 목록을 확인하기 위해 반드시 먼저 `list` 함수를 호출한다.
+                    - 그 결과에서 일치하는 패키지를 찾아 해당 `name`과 `organization` 정보를 이용해 `delete` 또는 `update` 함수를 호출한다.
+                    - 목록에 존재하지 않으면 함수 호출을 시도하지 않는다.
+
+                    3. `list`, `build`, `init`, `test`, `run` 등의 함수는 사용자의 명령이 명확히 해당 기능일 경우에만 호출한다.
+
+                    추가적인 조건:
+                    - 패키지 이름이 모호하거나 불완전한 경우, 유사한 이름을 Maven Central에서 찾아 보정한다.
+                    - 함수 호출 결과를 받은 후에는 반드시 해당 결과를 반영해 다음 행동을 결정해야 한다.
+                    - 사용자의 질문이나 요청이 위 범주에 포함되지 않으면 무시한다.
+
+                    예시:
+                    - "junit 설치해줘" → Maven에서 `junit`에 대한 정확한 정보 검색 → install(name, organization)
+                    - "log4j 삭제해줘" → list() → 설치 목록에서 log4j 찾기 → delete(name, organization)
+                    - "프로젝트 실행해줘" → run()
+                    .
                     이외의 질문은 무시해.
                     '''},
                     {"role": "user", 
@@ -39,14 +61,18 @@ def query_process(query):
     )
 
     #첫 결과(전체)
-    #print(response.output)
+    print(response.output)
 
     response_list=[]
 
     for tool_call in response.output:
+        #각각의 tool_call 에 대하여 query chaining이 끝날 때까지 gpt를 호출해야 함.
+        # chaining 시에는 append로 모든 답안을 합해서 보낼 것. 누적으로.
+        #각 tool_call의 최종 답은 response_list에 담아서 보낼 것.
         #print(tool_call)
         args=json.loads(tool_call.arguments)
         #print(args)
+        
         
         result=jpm_core_function.jpm_caller(tool_call)
 
@@ -66,6 +92,7 @@ def query_process(query):
         tools=tools,
             )
         
+        print("아웃풋:"+ str(response_2.output))
         response_list.append(response_2.output_text)
 
     return response_list[len(response_list)-1]

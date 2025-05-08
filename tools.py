@@ -1,7 +1,7 @@
 tools = [
         {
       "type": "function",
-      "name": "installPkg",
+      "name": "install",
       "description": "하나의 패키지를 프로젝트에 설치합니다.",
       "parameters": {
         "type": "object",
@@ -22,41 +22,47 @@ tools = [
 
     {
         "type": "function",
-        "name": "deletePkg",
-        "description": "주어진 패키지 리스트를 프로젝트에서 삭제합니다.",
+        "name": "delete",
+        "description": "주어진 패키지를 프로젝트에서 삭제합니다.",
         "parameters": {
-            "type": "object",
-            "properties": {
-                "packageList": {
-                    "type": "array",
-                    "items": { "type": "string" },
-                    "description": "삭제할 패키지 이름 리스트"
-                }
-            },
-            "required": ["packageList"],
-            "additionalProperties": False
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "패키지 이름"
+          },
+          "organization": {
+            "type": "string",
+            "description": "패키지를 배포한 기관명"
+          }
+        },
+        "required": ["name", "organization"],
+        "additionalProperties": False
         }
     },
     {
         "type": "function",
-        "name": "updatePkg",
-        "description": "주어진 패키지 리스트를 업데이트합니다.",
+        "name": "update",
+        "description": "주어진 패키지를 최신 버전으로 업데이트합니다.",
         "parameters": {
-            "type": "object",
-            "properties": {
-                "packageList": {
-                    "type": "array",
-                    "items": { "type": "string" },
-                    "description": "업데이트할 패키지 이름 리스트"
-                }
-            },
-            "required": ["packageList"],
-            "additionalProperties": False
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "패키지 이름"
+          },
+          "organization": {
+            "type": "string",
+            "description": "패키지를 배포한 기관명"
+          }
+        },
+        "required": ["name", "organization"],
+        "additionalProperties": False
         }
     },
     {
         "type": "function",
-        "name": "listPkg",
+        "name": "list",
         "description": "현재 프로젝트에 설치된 모든 패키지를 조회합니다.",
         "parameters": {
             "type": "object",
