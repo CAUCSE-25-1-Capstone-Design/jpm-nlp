@@ -11,6 +11,32 @@ def jpm_caller(tool_call):
             ## to be implemented
 
             return "패키지를 설치하였습니다."
+        case "deletePkg":
+            
+            return "패키지를 삭제했습니다."
+        
+        case "updatePkg":
+
+            return
+        
+        case "listPkg":
+
+            return
+        case "build":
+
+            return
+        
+        case "init":
+
+            return
+        
+        case "test":
+
+            return
+        
+        case "run":
+
+            return
         
 
     return "잘못된 행동입니다.."    
