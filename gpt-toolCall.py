@@ -37,7 +37,6 @@ def query_process(query):
                     추가적인 조건:
                     - 패키지 이름이 모호하거나 불완전한 경우, 유사한 이름을 Maven Central에서 찾아 보정한다.
                     - 함수 호출 결과를 받은 후에는 반드시 해당 결과를 반영해 다음 행동을 결정해야 한다.
-                    - 사용자의 질문이나 요청이 위 범주에 포함되지 않으면 무시한다.
 
                     예시:
                     - "junit 설치해줘" → Maven에서 `junit`에 대한 정확한 정보 검색 → install(name, organization)
@@ -65,6 +64,13 @@ def query_process(query):
 
     response_list=[]
 
+    #type: function_call, message
+
+    for tool_call in response.output:
+        tool_call_process(tool_call, input_messages, client)
+
+    return
+
     for tool_call in response.output:
         #각각의 tool_call 에 대하여 query chaining이 끝날 때까지 gpt를 호출해야 함.
         # chaining 시에는 append로 모든 답안을 합해서 보낼 것. 누적으로.
@@ -73,9 +79,11 @@ def query_process(query):
         args=json.loads(tool_call.arguments)
         #print(args)
         
-        
+
+
         result=jpm_core_function.jpm_caller(tool_call)
 
+        
         #print(result)
 
         input_messages.append(tool_call)
@@ -97,6 +105,38 @@ def query_process(query):
 
     return response_list[len(response_list)-1]
 
+# 재귀적으로 tool_call 처리하는 함수
+def tool_call_process(tool_call, input_messages, client):
+
+#이 부분 최적화 필요. text찾기
+    if(tool_call.type=="message"):
+        for response in tool_call.content:
+            print(response.text)
+        return
+    
+    
+
+    result = jpm_core_function.jpm_caller(tool_call)
+
+    input_messages.append(tool_call)
+    input_messages.append({
+        "type": "function_call_output",
+        "call_id": tool_call.call_id,
+        "output": str(result)
+    })
+    
+    response_2 = client.responses.create(
+        model="gpt-4.1",
+        input=input_messages,
+        tools=myTools,
+        )
+
+    #for tool_call in response_2.output:
+    tool_call_process(response_2.output[0], input_messages, client)
+
+    
+
+
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("No input provided")
@@ -104,4 +144,4 @@ if __name__ == "__main__":
 
     query = sys.argv[1]
     result = query_process(query)
-    print(result)
+    #print(result)

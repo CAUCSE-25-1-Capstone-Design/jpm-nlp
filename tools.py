@@ -116,5 +116,22 @@ tools = [
         }
     },
 
+    {
+      "type": "function",
+      "name": "set",
+      "description": "실행할 프로젝트의 메인 클래스를 설정합니다.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "진입점 클래스 패키지명"
+          }
+        },
+        "required": ["name"],
+        "additionalProperties": False
+      }
+    }
+
    
 ]
