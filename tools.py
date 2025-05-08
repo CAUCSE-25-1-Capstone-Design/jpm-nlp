@@ -13,9 +13,9 @@ tools = [
           "organization": {
             "type": "string",
             "description": "패키지를 배포한 기관명"
-          },
+          }
         },
-        "required": ["name", "organization", "version"],
+        "required": ["name", "organization"],
         "additionalProperties": False
       }
     },

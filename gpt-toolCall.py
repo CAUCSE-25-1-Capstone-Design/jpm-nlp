@@ -15,12 +15,13 @@ def query_process(query):
     client = OpenAI()
 
     tools=myTools
-
+    
     input_messages=[{"role": "system", 
                      "content": '''
                     너는 사용자의 자연어 명령을 받아 알맞은 java 함수(tool)를 호출하는 시스템이다. 
                     만약 패키지명이 완전하지 않다면 maven central에서 가장 유사한 패키지명으로 검색해.
                     또한 패키지를 설치할 때 패키지를 배포한 기관명(organization)을 maven central에서 검색해.
+                    패키지의 버전은 maven central 에서 해당 패키지의 버전을 가져와.
                     이외의 질문은 무시해.
                     '''},
                     {"role": "user", 
@@ -37,16 +38,19 @@ def query_process(query):
         temperature=0
     )
 
-    print(response.output)
+    #첫 결과(전체)
+    #print(response.output)
+
+    response_list=[]
 
     for tool_call in response.output:
         #print(tool_call)
         args=json.loads(tool_call.arguments)
-        print(args)
+        #print(args)
         
         result=jpm_core_function.jpm_caller(tool_call)
 
-        print(result)
+        #print(result)
 
         input_messages.append(tool_call)
         input_messages.append({
@@ -62,8 +66,9 @@ def query_process(query):
         tools=tools,
             )
         
-        return response_2.output_text
+        response_list.append(response_2.output_text)
 
+    return response_list[len(response_list)-1]
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
