@@ -57,12 +57,12 @@ def no_args_jpm(fn_name):
 
             # print(result.stdout)
 
-            # print("STDERR:")
-            # print(result.stderr)
+    # print("STDERR:")
+    # print(result.stderr)
             # 추후에 예외처리 필요.
 
 
-    return result.stdout
+    return "STDOUT:"+ result.stdout+"; STDERR:"+result.stderr+";"
 
 
 def one_args_jpm(fn_name, arg):
@@ -76,7 +76,7 @@ def one_args_jpm(fn_name, arg):
     # print(result.stdout)
 
     # print("STDERR:")
-    # print(result.stderr)
+    #print(result.stderr)
     # 추후에 예외처리 필요.
 
-    return result.stdout
+    return "STDOUT:"+ result.stdout+"; STDERR:"+result.stderr+";"
