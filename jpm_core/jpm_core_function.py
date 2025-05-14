@@ -16,12 +16,13 @@ def jpm_caller(tool_call):
             ## to be implemented
             # organization:name으로 붙여.
             # 패키지 리스트로 분해해야 함
-            org_and_names=""
+            org_and_name_list=[]
             for package in args['packages']:
-                org_and_names=org_and_names+ package['organization']+ ":"+ package['name']+" "
+                org_and_name=package['organization']+":"+package['name']
+                org_and_name_list.append(org_and_name)
            
-            print(org_and_names)
-            return one_args_jpm(fn_name, org_and_names)
+            print(org_and_name_list)
+            return one_args_jpm(fn_name, org_and_name_list)
         
         
 
@@ -68,7 +69,7 @@ def no_args_jpm(fn_name):
 def one_args_jpm(fn_name, arg):
 
     result = subprocess.run(
-        ['java', '-jar', 'C:\\Users\\PC\\Desktop\\Python\\jpm-nlp\\jpm_core\\jpm.jar', fn_name, arg],
+        ['java', '-jar', 'C:\\Users\\PC\\Desktop\\Python\\jpm-nlp\\jpm_core\\jpm.jar', fn_name]+arg,
         capture_output=True,
         text=True
     )
