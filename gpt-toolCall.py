@@ -18,7 +18,6 @@ def query_process(query):
     
     input_messages=[{"role": "system", 
                      "content": '''
-                    너는 사용자의 자연어 명령을 받아 알맞은 java 함수(tool)를 호출하는 시스템이다. 
                     너는 사용자의 자연어 명령을 받아 해당 명령을 수행하기 위해 알맞은 Java 함수(tool)를 호출하는 시스템이다.
 
                     다음 규칙을 반드시 따르도록 한다:
@@ -71,39 +70,39 @@ def query_process(query):
 
     return
 
-    for tool_call in response.output:
-        #각각의 tool_call 에 대하여 query chaining이 끝날 때까지 gpt를 호출해야 함.
-        # chaining 시에는 append로 모든 답안을 합해서 보낼 것. 누적으로.
-        #각 tool_call의 최종 답은 response_list에 담아서 보낼 것.
-        #print(tool_call)
-        args=json.loads(tool_call.arguments)
-        #print(args)
+    # for tool_call in response.output:
+    #     #각각의 tool_call 에 대하여 query chaining이 끝날 때까지 gpt를 호출해야 함.
+    #     # chaining 시에는 append로 모든 답안을 합해서 보낼 것. 누적으로.
+    #     #각 tool_call의 최종 답은 response_list에 담아서 보낼 것.
+    #     #print(tool_call)
+    #     args=json.loads(tool_call.arguments)
+    #     #print(args)
         
 
 
-        result=jpm_core_function.jpm_caller(tool_call)
+    #     result=jpm_core_function.jpm_caller(tool_call)
 
         
-        #print(result)
+    #     #print(result)
 
-        input_messages.append(tool_call)
-        input_messages.append({
-            "type": "function_call_output",
-            "call_id": tool_call.call_id,
-            "output": str(result)
-        })
+    #     input_messages.append(tool_call)
+    #     input_messages.append({
+    #         "type": "function_call_output",
+    #         "call_id": tool_call.call_id,
+    #         "output": str(result)
+    #     })
 
 
-        response_2 = client.responses.create(
-        model="gpt-4.1",
-        input=input_messages,
-        tools=tools,
-            )
+    #     response_2 = client.responses.create(
+    #     model="gpt-4.1",
+    #     input=input_messages,
+    #     tools=tools,
+    #         )
         
-        print("아웃풋:"+ str(response_2.output))
-        response_list.append(response_2.output_text)
+    #     print("아웃풋:"+ str(response_2.output))
+    #     response_list.append(response_2.output_text)
 
-    return response_list[len(response_list)-1]
+    # return response_list[len(response_list)-1]
 
 # 재귀적으로 tool_call 처리하는 함수
 def tool_call_process(tool_call, input_messages, client):

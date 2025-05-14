@@ -5,6 +5,7 @@ import json
 #tool_call을 받아서 파싱한 후 jpm 호출
 def jpm_caller(tool_call):
     fn_name=tool_call.name
+    #arguments='{"packages":[{"name":"bluecove","organization":"net.sf.bluecove"},{"name":"mysql-connector-java","organization":"mysql"}]}'
     args = json.loads(tool_call.arguments)
     print("함수명:" + fn_name)
 
@@ -14,11 +15,17 @@ def jpm_caller(tool_call):
 
             ## to be implemented
             # organization:name으로 붙여.
-            org_and_name=args["organization"]+":"+args["name"]
-            
-            return one_args_jpm(fn_name, org_and_name)
+            # 패키지 리스트로 분해해야 함
+            org_and_names=""
+            for package in args['packages']:
+                org_and_names=org_and_names+ package['organization']+ ":"+ package['name']+" "
+           
+            print(org_and_names)
+            return one_args_jpm(fn_name, org_and_names)
         
         
+
+
         case "list"|"build"|"init"|"test"|"run":
 
             return no_args_jpm(fn_name)

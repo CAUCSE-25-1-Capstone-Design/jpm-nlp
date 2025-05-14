@@ -1,65 +1,98 @@
 tools = [
         {
-      "type": "function",
-      "name": "install",
-      "description": "하나의 패키지를 프로젝트에 설치합니다.",
-      "parameters": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "패키지 이름"
+  "type": "function",
+  "name": "install",
+  "description": "여러 개의 패키지를 프로젝트에 설치합니다.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "packages": {
+        "type": "array",
+        "description": "설치할 패키지 목록",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "패키지 이름"
+            },
+            "organization": {
+              "type": "string",
+              "description": "패키지를 배포한 기관명"
+            }
           },
-          "organization": {
-            "type": "string",
-            "description": "패키지를 배포한 기관명"
-          }
-        },
-        "required": ["name", "organization"],
-        "additionalProperties": False
+          "required": ["name", "organization"]
+        }
       }
     },
+    "required": ["packages"],
+    "additionalProperties": False
+  }
+}
+,
+{
+  "type": "function",
+  "name": "delete",
+  "description": "여러 개의 패키지를 프로젝트에서 삭제합니다.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "packages": {
+        "type": "array",
+        "description": "삭제할 패키지 목록",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "패키지 이름"
+            },
+            "organization": {
+              "type": "string",
+              "description": "패키지를 배포한 기관명"
+            }
+          },
+          "required": ["name", "organization"]
+        }
+      }
+    },
+    "required": ["packages"],
+    "additionalProperties": False
+  }
+}
+,
+   {
+  "type": "function",
+  "name": "update",
+  "description": "여러 개의 패키지를 최신 버전으로 업데이트합니다.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "packages": {
+        "type": "array",
+        "description": "업데이트할 패키지 목록",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "패키지 이름"
+            },
+            "organization": {
+              "type": "string",
+              "description": "패키지를 배포한 기관명"
+            }
+          },
+          "required": ["name", "organization"]
+        }
+      }
+    },
+    "required": ["packages"],
+    "additionalProperties": False
+  }
+}
 
-    {
-        "type": "function",
-        "name": "delete",
-        "description": "주어진 패키지를 프로젝트에서 삭제합니다.",
-        "parameters": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "패키지 이름"
-          },
-          "organization": {
-            "type": "string",
-            "description": "패키지를 배포한 기관명"
-          }
-        },
-        "required": ["name", "organization"],
-        "additionalProperties": False
-        }
-    },
-    {
-        "type": "function",
-        "name": "update",
-        "description": "주어진 패키지를 최신 버전으로 업데이트합니다.",
-        "parameters": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "패키지 이름"
-          },
-          "organization": {
-            "type": "string",
-            "description": "패키지를 배포한 기관명"
-          }
-        },
-        "required": ["name", "organization"],
-        "additionalProperties": False
-        }
-    },
+   ,
     {
         "type": "function",
         "name": "list",
