@@ -5,7 +5,7 @@ import tools
 import json
 from jpm_core import jpm_core_function
 import sys
-from utils import debug_print
+from utils import print_debug, save_gpt, save_user, read_all, read_last_n_chars, print_ui
 
 import yaml
 with open('config.yaml') as f:
@@ -20,6 +20,10 @@ GPT_VERSION=conf['gpt-version']
 
 myTools=tools.tools
 def query_process(query):
+
+    chat_log=read_last_n_chars() # 이전의 대화 로그를 가져옴
+    
+    save_user(query)
 #나중에 환경변수로 처리하기
     os.environ['OPENAI_API_KEY'] = GPT_KEY
     client = OpenAI()
@@ -46,6 +50,7 @@ def query_process(query):
                     추가적인 조건:
                     - 패키지 이름이 모호하거나 불완전한 경우, 유사한 이름을 Maven Central에서 찾아 보정한다.
                     - 함수 호출 결과를 받은 후에는 반드시 해당 결과를 반영해 다음 행동을 결정해야 한다.
+                    - 이전의 대화 기록이 같이 제공되므로, 이를 활용한 대답을 해도 된다.
 
                     예시:
                     - "junit 설치해줘" → Maven에서 `junit`에 대한 정확한 정보 검색 → install(name, organization)
@@ -55,7 +60,7 @@ def query_process(query):
                     이외의 질문은 무시해.
                     '''},
                     {"role": "user", 
-                    "content": query}
+                    "content": query+chat_log}
                     ]
         
         ## 기관명이랑 버전도 가져와야 함.
@@ -69,7 +74,7 @@ def query_process(query):
     )
 
     #첫 결과(전체)
-    debug_print(response.output)
+    print_debug(response.output)
 
     response_list=[]
 
@@ -77,7 +82,7 @@ def query_process(query):
 
     for tool_call in response.output:
         tool_call_process(tool_call, input_messages, client)
-
+        
     return
 
     # for tool_call in response.output:
@@ -118,9 +123,11 @@ def query_process(query):
 def tool_call_process(tool_call, input_messages, client):
 
 #이 부분 최적화 필요. text찾기
+# 메시지일 때만 ui에 출력하도록 함.
     if(tool_call.type=="message"):
         for response in tool_call.content:
-            print(response.text)
+            print_ui(response.text)
+            save_gpt(response.text)
         return
     
     
@@ -148,7 +155,7 @@ def tool_call_process(tool_call, input_messages, client):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("No input provided")
+        print_ui("입력을 제공해주세요.")
         sys.exit(1)
 
     query = sys.argv[1]
