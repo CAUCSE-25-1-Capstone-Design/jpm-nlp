@@ -1,17 +1,24 @@
 import jpm_core.jpm_core_function
 from openai import OpenAI
 import os
-import tools, arrays_tool
+import tools
 import json
 from jpm_core import jpm_core_function
 import sys
+from utils import debug_print
+
+import yaml
+with open('config.yaml') as f:
+    conf = yaml.safe_load(f)
+ 
+GPT_KEY = conf['gpt-key']
+GPT_VERSION=conf['gpt-version']
 
 
 myTools=tools.tools
 def query_process(query):
 #나중에 환경변수로 처리하기
-    os.environ['OPENAI_API_KEY'] = "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"
-
+    os.environ['OPENAI_API_KEY'] = GPT_KEY
     client = OpenAI()
 
     tools=myTools
@@ -51,7 +58,7 @@ def query_process(query):
         ## 기관명이랑 버전도 가져와야 함.
 
     response = client.responses.create(
-        model="gpt-4.1",
+        model=GPT_VERSION,
         input=input_messages,
         tools=tools,
         tool_choice="auto",
@@ -59,7 +66,7 @@ def query_process(query):
     )
 
     #첫 결과(전체)
-    print(response.output)
+    debug_print(response.output)
 
     response_list=[]
 
@@ -125,7 +132,7 @@ def tool_call_process(tool_call, input_messages, client):
     })
     
     response_2 = client.responses.create(
-        model="gpt-4.1",
+        model=GPT_VERSION,
         input=input_messages,
         tools=myTools,
         )
