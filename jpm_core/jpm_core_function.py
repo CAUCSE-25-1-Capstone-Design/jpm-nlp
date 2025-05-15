@@ -1,7 +1,7 @@
 
 import subprocess
 import json
-from utils import debug_print
+from utils import print_debug
 
 
 #tool_call을 받아서 파싱한 후 jpm 호출
@@ -9,7 +9,7 @@ def jpm_caller(tool_call):
     fn_name=tool_call.name
     #arguments='{"packages":[{"name":"bluecove","organization":"net.sf.bluecove"},{"name":"mysql-connector-java","organization":"mysql"}]}'
     args = json.loads(tool_call.arguments)
-    debug_print("jpm-core call: " + fn_name)
+    print_debug("jpm-core call: " + fn_name)
 
     #  함수명에 따라 jpm-core 호출해야 함.
     match fn_name:
@@ -23,7 +23,7 @@ def jpm_caller(tool_call):
                 org_and_name=package['organization']+":"+package['name']
                 org_and_name_list.append(org_and_name)
            
-            debug_print(org_and_name_list)
+            print_debug(org_and_name_list)
             return one_args_jpm(fn_name, org_and_name_list)
         
         
