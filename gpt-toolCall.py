@@ -10,8 +10,11 @@ from utils import debug_print
 import yaml
 with open('config.yaml') as f:
     conf = yaml.safe_load(f)
+
+with open('key.yaml') as f:
+    conf_key = yaml.safe_load(f)
  
-GPT_KEY = conf['gpt-key']
+GPT_KEY = conf_key['gpt-key']
 GPT_VERSION=conf['gpt-version']
 
 
