@@ -18,7 +18,7 @@ GPT_KEY = conf_key['gpt-key']
 GPT_VERSION=conf['gpt-version']
 
 if sys.platform.startswith('win'):
-    sys.stdout = io.TextI0Wrapper (sys.stdout.buffer, encoding='utf-8')
+    sys.stdout = io.TextIOWrapper (sys.stdout.buffer, encoding='utf-8')
     sys.stderr = io.TextIOWrapper (sys.stderr.buffer, encoding='utf-8')
 
 metaData=jpm_core_function.no_args_jpm("getMeta")

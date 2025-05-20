@@ -9,7 +9,7 @@ import sys
 
 def print_debug(string):
    
-    print("[Debug:"+ str(time.strftime(' %X'))+"] " + str(string))
+    print("[Debug:"+ str(time.strftime(' %X'))+"] " + str(string), flush=True)
 
 def print_ui(string):
     print(string, flush=True)

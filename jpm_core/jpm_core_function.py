@@ -38,6 +38,7 @@ def jpm_caller(tool_call):
             # 개별로 실행 요청
 
             no_args_jpm("refresh")
+            print_debug("refresh 완료")
             return jpm_core_result
         
         
