@@ -2,7 +2,11 @@
 import subprocess
 import json
 from utils import print_debug, show_progress
+import yaml
 
+with open('config.yaml') as f:
+    conf = yaml.safe_load(f)
+jpm_core_loc=conf['jpm-core-loc']
 
 #tool_call을 받아서 파싱한 후 jpm 호출
 def jpm_caller(tool_call):
@@ -61,7 +65,7 @@ def jpm_caller(tool_call):
 def no_args_jpm(fn_name):
     result = subprocess.run(
                 # 여기에 인자 없이 어떻게 넣는거임? 그냥 비워두면 되나 체크하기
-                ['java', '-jar', 'C:\\Users\\PC\\Desktop\\jpm-nlp\\jpm.jar', fn_name,],
+                ['java', '-jar', jpm_core_loc, fn_name,],
                 capture_output=True,
                 text=True
             )
@@ -79,7 +83,7 @@ def no_args_jpm(fn_name):
 def one_args_jpm(fn_name, arg):
 
     result = subprocess.run(
-        ['java', '-jar', 'C:\\Users\\PC\\Desktop\\jpm-nlp\\jpm.jar', fn_name]+arg,
+        ['java', '-jar', jpm_core_loc, fn_name]+arg,
         capture_output=True,
         text=True
     )
