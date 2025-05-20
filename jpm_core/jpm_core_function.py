@@ -37,7 +37,7 @@ def jpm_caller(tool_call):
             #show_progress(fn_name, 3)
             # 개별로 실행 요청
 
-
+            no_args_jpm("refresh")
             return jpm_core_result
         
         
