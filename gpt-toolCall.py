@@ -60,7 +60,7 @@ def query_process(query):
 
                     예시:
                     - "junit 설치해줘" → Maven에서 `junit`에 대한 정확한 정보 검색 → install(name, organization)
-                    - "log4j 삭제해줘" → list() → 설치 목록에서 log4j 찾기 → delete(name, organization)
+                    - "log4j 삭제해줘" → 하단의 메타데이터 확인 → 설치 목록에서 log4j 찾기 → delete(name, organization)
                     - "프로젝트 실행해줘" → run()
                     .
                     개발과 관련 없는 이외의 질문은 무시해.
