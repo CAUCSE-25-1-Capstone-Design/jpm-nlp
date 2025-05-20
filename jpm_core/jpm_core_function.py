@@ -53,7 +53,7 @@ def jpm_caller(tool_call):
 def no_args_jpm(fn_name):
     result = subprocess.run(
                 # 여기에 인자 없이 어떻게 넣는거임? 그냥 비워두면 되나 체크하기
-                ['java', '-jar', 'C:\\Users\\PC\\Desktop\\Python\\jpm-nlp\\jpm_core\\jpm.jar', fn_name,],
+                ['java', '-jar', 'C:\\Users\\PC\\Desktop\\jpm-nlp\\jpm.jar', fn_name,],
                 capture_output=True,
                 text=True
             )
@@ -71,7 +71,7 @@ def no_args_jpm(fn_name):
 def one_args_jpm(fn_name, arg):
 
     result = subprocess.run(
-        ['java', '-jar', 'C:\\Users\\PC\\Desktop\\Python\\jpm-nlp\\jpm_core\\jpm.jar', fn_name]+arg,
+        ['java', '-jar', 'C:\\Users\\PC\\Desktop\\jpm-nlp\\jpm.jar', fn_name]+arg,
         capture_output=True,
         text=True
     )
