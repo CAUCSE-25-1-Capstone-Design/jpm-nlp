@@ -19,9 +19,10 @@ def jpm_caller(tool_call):
             # organization:name으로 붙여.
             # 패키지 리스트로 분해해야 함
             org_and_name_list=[]
+            jpm_core_result=""
             for package in args['packages']:
                 org_and_name=package['organization']+":"+package['name']
-                org_and_name_list.append(org_and_name)
+                jpm_core_result+=one_args_jpm(fn_name, org_and_name)
            
             print_debug(org_and_name_list)
 
@@ -72,7 +73,7 @@ def no_args_jpm(fn_name):
             # 추후에 예외처리 필요.
 
 
-    return "STDOUT:"+ result.stdout+"; STDERR:"+result.stderr+";"
+    return "STDOUT:"+ result.stdout+";\n STDERR:"+result.stderr+";"
 
 
 def one_args_jpm(fn_name, arg):

@@ -24,10 +24,10 @@ if sys.platform.startswith('win'):
 
 myTools=tools.tools
 def query_process(query):
-
+    save_user(query)
     chat_log=read_last_n_chars() # 이전의 대화 로그를 가져옴
     
-    save_user(query)
+    
 #나중에 환경변수로 처리하기
     os.environ['OPENAI_API_KEY'] = GPT_KEY
     client = OpenAI()
