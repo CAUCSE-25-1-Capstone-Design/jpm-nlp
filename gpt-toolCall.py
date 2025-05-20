@@ -21,6 +21,7 @@ if sys.platform.startswith('win'):
     sys.stdout = io.TextI0Wrapper (sys.stdout.buffer, encoding='utf-8')
     sys.stderr = io.TextIOWrapper (sys.stderr.buffer, encoding='utf-8')
 
+metaData=jpm_core_function.no_args_jpm("getMeta")
 
 myTools=tools.tools
 def query_process(query):
@@ -55,6 +56,7 @@ def query_process(query):
                     - 패키지 이름이 모호하거나 불완전한 경우, 유사한 이름을 Maven Central에서 찾아 보정한다.
                     - 함수 호출 결과를 받은 후에는 반드시 해당 결과를 반영해 다음 행동을 결정해야 한다.
                     - 이전의 대화 기록이 같이 제공되므로, 이를 활용한 대답을 해도 된다.
+                    - 제공되는 메타데이터 역시 참고하여 대답한다.
 
                     예시:
                     - "junit 설치해줘" → Maven에서 `junit`에 대한 정확한 정보 검색 → install(name, organization)
@@ -65,7 +67,9 @@ def query_process(query):
 
                     이전 대화 내역은 다음과 같음:\n
                     '''
-                    +chat_log},
+                    +chat_log
+                    + "\n 메타 데이터는 다음과 같음\n"
+                    + metaData},
                     {"role": "user", 
                     "content": query}
                     ]
@@ -141,7 +145,7 @@ def tool_call_process(tool_call, input_messages, client):
     
 
     result = jpm_core_function.jpm_caller(tool_call)
-    print_ui("\n-------------Core 출력 결과-------------\n" + result + "\n-------------출력완료-------------\n")
+   
 
     input_messages.append(tool_call)
     input_messages.append({
