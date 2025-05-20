@@ -37,7 +37,7 @@ def jpm_caller(tool_call):
         ## 메인 클래스 설정
         case "set":
 
-            arg = "--main="+ args["name"]
+            arg = ["--main="+ args["name"]]
 
 
             return one_args_jpm(fn_name, arg)

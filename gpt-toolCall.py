@@ -85,6 +85,7 @@ def query_process(query):
         
     return
 
+
     # for tool_call in response.output:
     #     #각각의 tool_call 에 대하여 query chaining이 끝날 때까지 gpt를 호출해야 함.
     #     # chaining 시에는 append로 모든 답안을 합해서 보낼 것. 누적으로.
