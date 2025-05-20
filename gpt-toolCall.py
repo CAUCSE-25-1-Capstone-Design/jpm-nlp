@@ -6,7 +6,7 @@ import json
 from jpm_core import jpm_core_function
 import sys
 from utils import print_debug, save_gpt, save_user, read_all, read_last_n_chars, print_ui
-
+import io
 import yaml
 with open('config.yaml') as f:
     conf = yaml.safe_load(f)
@@ -18,8 +18,8 @@ GPT_KEY = conf_key['gpt-key']
 GPT_VERSION=conf['gpt-version']
 
 if sys.platform.startswith('win'):
-    sys.stdout = io. TextI0Wrapper (sys.stdout.buffer, encoding='utf-8')
-    sys.stderr = io. TextIOWrapper (sys.stderr.buffer, encoding='utf-8')
+    sys.stdout = io.TextI0Wrapper (sys.stdout.buffer, encoding='utf-8')
+    sys.stderr = io.TextIOWrapper (sys.stderr.buffer, encoding='utf-8')
 
 
 myTools=tools.tools
@@ -156,7 +156,7 @@ def tool_call_process(tool_call, input_messages, client):
         tools=myTools,
         )
 
-    #for tool_call in response_2.output:
+    #for tool_call in response_2.output: 
     tool_call_process(response_2.output[0], input_messages, client)
 
     
