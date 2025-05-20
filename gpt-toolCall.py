@@ -57,7 +57,7 @@ def query_process(query):
                     - "log4j 삭제해줘" → list() → 설치 목록에서 log4j 찾기 → delete(name, organization)
                     - "프로젝트 실행해줘" → run()
                     .
-                    이외의 질문은 무시해.
+                    개발과 관련 없는 이외의 질문은 무시해.
                     '''},
                     {"role": "user", 
                     "content": query+chat_log}

@@ -32,7 +32,7 @@ def read_last_n_chars(file_path="log.txt", n_chars=2500):
     
 
 def read_all():
-    f= open("log.txt", "r")
+    f= open("log.txt", "r", encoding="UTF-8")
 
     r=f.read()
 
@@ -45,7 +45,7 @@ def read_all():
 # 지금까지의 대화 로그를 저장
 # 시간, 날짜도 같이 저장하기
 def save(string):
-    f= open("log.txt","a")
+    f= open("log.txt","a", encoding="UTF-8")
 
     f.write("["+str(time.strftime('%x %X'))+"] "+str(string)+"\n")
    
