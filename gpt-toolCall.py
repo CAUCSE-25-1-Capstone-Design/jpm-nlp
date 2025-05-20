@@ -134,6 +134,7 @@ def tool_call_process(tool_call, input_messages, client):
     
 
     result = jpm_core_function.jpm_caller(tool_call)
+    print_ui("\n-------------Core 출력 결과-------------\n" + result + "\n-------------출력완료-------------\n")
 
     input_messages.append(tool_call)
     input_messages.append({
