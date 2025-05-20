@@ -1,7 +1,7 @@
 
 import subprocess
 import json
-from utils import print_debug
+from utils import print_debug, show_progress
 
 
 #tool_call을 받아서 파싱한 후 jpm 호출
@@ -24,7 +24,14 @@ def jpm_caller(tool_call):
                 org_and_name_list.append(org_and_name)
            
             print_debug(org_and_name_list)
-            return one_args_jpm(fn_name, org_and_name_list)
+
+            # progress bar
+            #show_progress(fn_name, 3)
+            # 개별로 실행 요청
+
+            jpm_core_result=one_args_jpm(fn_name, org_and_name_list)
+
+            return jpm_core_result
         
         
 

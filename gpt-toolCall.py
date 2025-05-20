@@ -17,6 +17,10 @@ with open('key.yaml') as f:
 GPT_KEY = conf_key['gpt-key']
 GPT_VERSION=conf['gpt-version']
 
+if sys.platform.startswith('win'):
+    sys.stdout = io. TextI0Wrapper (sys.stdout.buffer, encoding='utf-8')
+    sys.stderr = io. TextIOWrapper (sys.stderr.buffer, encoding='utf-8')
+
 
 myTools=tools.tools
 def query_process(query):
@@ -58,9 +62,12 @@ def query_process(query):
                     - "프로젝트 실행해줘" → run()
                     .
                     개발과 관련 없는 이외의 질문은 무시해.
-                    '''},
+
+                    이전 대화 내역은 다음과 같음:\n
+                    '''
+                    +chat_log},
                     {"role": "user", 
-                    "content": query+chat_log}
+                    "content": query}
                     ]
         
         ## 기관명이랑 버전도 가져와야 함.

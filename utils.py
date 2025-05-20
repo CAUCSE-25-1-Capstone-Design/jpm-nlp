@@ -57,3 +57,14 @@ def save_gpt(string):
 
 def save_user(string):
     save("USER: "+ str(string))
+
+def show_progress(fn_name, duration, steps=100):
+    """
+    지정된 시간(duration 초) 동안, 0부터 0.99까지 progress를 출력합니다.
+    예: JPM_PROGRESS_UPDATE;install;0.34
+    """
+    for i in range(steps):
+        progress = round(i / steps, 2)  # 0.00 ~ 0.99
+        print(f"JPM_PROGRESS_UPDATE;{fn_name};{progress}")
+        sys.stdout.flush()
+        time.sleep(duration / steps)
