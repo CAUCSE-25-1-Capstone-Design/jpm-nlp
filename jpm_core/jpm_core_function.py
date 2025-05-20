@@ -3,6 +3,7 @@ import subprocess
 import json
 from utils import print_debug, show_progress
 import yaml
+from utils import print_debug
 
 with open('config.yaml') as f:
     conf = yaml.safe_load(f)
@@ -26,7 +27,9 @@ def jpm_caller(tool_call):
             jpm_core_result=""
             for package in args['packages']:
                 org_and_name=package['organization']+":"+package['name']
-                jpm_core_result+=one_args_jpm(fn_name, org_and_name)
+                result=one_args_jpm(fn_name, org_and_name)
+                print_debug("\n-------------Core 출력 결과-------------\n" + result + "\n-------------출력완료-------------\n")
+                jpm_core_result+=result
            
             print_debug(org_and_name_list)
 
@@ -34,7 +37,6 @@ def jpm_caller(tool_call):
             #show_progress(fn_name, 3)
             # 개별로 실행 요청
 
-            jpm_core_result=one_args_jpm(fn_name, org_and_name_list)
 
             return jpm_core_result
         
