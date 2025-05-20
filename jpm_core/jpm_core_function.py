@@ -26,7 +26,7 @@ def jpm_caller(tool_call):
             org_and_name_list=[]
             jpm_core_result=""
             for package in args['packages']:
-                org_and_name=package['organization']+":"+package['name']
+                org_and_name=[package['organization']+":"+package['name']]
                 result=one_args_jpm(fn_name, org_and_name)
                 print_debug("\n-------------Core 출력 결과-------------\n" + result + "\n-------------출력완료-------------\n")
                 jpm_core_result+=result
