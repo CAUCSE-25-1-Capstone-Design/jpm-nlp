@@ -11,7 +11,7 @@ def print_progress(layer, fn_name, fn_param):
 
 # 추후 주석처리
 def print_debug(string):
-   
+    return
     print("[Debug:"+ str(time.strftime(' %X'))+"] " + str(string), flush=True)
 
 def print_ui(string):
