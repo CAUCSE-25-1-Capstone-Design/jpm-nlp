@@ -5,7 +5,7 @@ import tools
 import json
 from jpm_core import jpm_core_function
 import sys
-from utils import print_debug, save_gpt, save_user, read_all, read_last_n_chars, print_ui
+from utils import print_debug, save_gpt, save_user, read_all, read_last_n_chars, print_ui, print_progress
 import io
 import yaml
 with open('config.yaml') as f:
@@ -77,6 +77,7 @@ def query_process(query):
         
         ## 기관명이랑 버전도 가져와야 함.
 
+    print_progress("GPT","generate", "")
     response = client.responses.create(
         model=GPT_VERSION,
         input=input_messages,

@@ -6,7 +6,10 @@ import sys
 
 #encoding = tiktoken.encoding_for_model("gpt-4")
 
+def print_progress(layer, fn_name, fn_param):
+    print("PROGRESS;"+layer+";"+fn_name+";"+fn_param, flush=True)
 
+# 추후 주석처리
 def print_debug(string):
    
     print("[Debug:"+ str(time.strftime(' %X'))+"] " + str(string), flush=True)
