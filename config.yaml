@@ -2,6 +2,6 @@
 #config.yaml
 
 
-jpm-core-loc: C:\\Users\\PC\\Desktop\\jpm-nlp\\jpm.jar
+jpm-core-loc: C:\\Users\\PC\\Desktop\\spring-petclinic\\jpm.jar
 
 gpt-version: gpt-4.1
