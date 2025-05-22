@@ -1,12 +1,15 @@
 
+import os
+import sys
 import subprocess
 import json
 from utils import print_debug, show_progress, print_progress
 import yaml
 
-with open('config.yaml') as f:
-    conf = yaml.safe_load(f)
-jpm_core_loc=conf['jpm-core-loc']
+# 현재 실행 중인 .py 파일이 있는 디렉토리 경로
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+PARENT_DIR = os.path.dirname(BASE_DIR)
+jpm_core_loc = os.path.join(PARENT_DIR, 'jpm.jar')
 
 #tool_call을 받아서 파싱한 후 jpm 호출
 def jpm_caller(tool_call):

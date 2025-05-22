@@ -6,10 +6,16 @@ import sys
 from utils import print_debug, save_gpt, save_user, read_all, read_last_n_chars, print_ui, print_progress
 import io
 import yaml
-with open('config.yaml') as f:
+
+# 현재 실행 중인 .py 파일이 있는 디렉토리 경로
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+config_path = os.path.join(BASE_DIR, 'config.yaml')
+key_path = os.path.join(BASE_DIR, 'key.yaml')
+
+with open(config_path) as f:
     conf = yaml.safe_load(f)
 
-with open('key.yaml') as f:
+with open(key_path) as f:
     conf_key = yaml.safe_load(f)
  
 GPT_KEY = conf_key['gpt-key']
