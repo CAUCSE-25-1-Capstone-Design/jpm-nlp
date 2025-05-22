@@ -1,8 +1,6 @@
-import jpm_core.jpm_core_function
 from openai import OpenAI
 import os
 import tools
-import json
 from jpm_core import jpm_core_function
 import sys
 from utils import print_debug, save_gpt, save_user, read_all, read_last_n_chars, print_ui, print_progress

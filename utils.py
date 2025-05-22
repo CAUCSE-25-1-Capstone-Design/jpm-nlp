@@ -1,7 +1,6 @@
 # print + flush 작업 필요(실시간 반응 위해)
 
 import time
-import tiktoken
 import sys
 
 #encoding = tiktoken.encoding_for_model("gpt-4")
@@ -12,7 +11,7 @@ def print_progress(layer, fn_name, fn_param):
 # 추후 주석처리
 def print_debug(string):
     return
-    print("[Debug:"+ str(time.strftime(' %X'))+"] " + str(string), flush=True)
+    #print("[Debug:"+ str(time.strftime(' %X'))+"] " + str(string), flush=True)
 
 def print_ui(string):
     print("OUTPUT;START", flush=True)
