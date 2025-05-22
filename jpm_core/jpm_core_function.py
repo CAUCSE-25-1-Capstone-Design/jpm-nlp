@@ -34,8 +34,8 @@ def jpm_caller(tool_call):
             print_debug(org_and_name_list)
 
 
+            print_progress("JPM", "refresh", "")
             no_args_jpm("refresh")
-            print_debug("refresh 완료")
             return jpm_core_result
         
         
@@ -43,6 +43,7 @@ def jpm_caller(tool_call):
 
         case "list"|"build"|"init"|"test"|"run":
 
+            print_progress("JPM", fn_name, "")
             return no_args_jpm(fn_name)
         
 
@@ -51,7 +52,7 @@ def jpm_caller(tool_call):
 
             arg = ["--main="+ args["name"]]
 
-
+            print_progress("JPM", fn_name, org_and_name[0])
             return one_args_jpm(fn_name, arg)
         
        
