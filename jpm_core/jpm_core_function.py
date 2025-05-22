@@ -52,7 +52,7 @@ def jpm_caller(tool_call):
 
             arg = ["--main="+ args["name"]]
 
-            print_progress("JPM", fn_name, org_and_name[0])
+            print_progress("JPM", fn_name, arg[0])
             return one_args_jpm(fn_name, arg)
         
        
