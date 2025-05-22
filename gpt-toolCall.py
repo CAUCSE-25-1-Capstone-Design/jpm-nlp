@@ -163,6 +163,7 @@ def tool_call_process(tool_call, input_messages, client):
         "output": str(result)
     })
     
+    print_progress("GPT","generate", "")
     response_2 = client.responses.create(
         model=GPT_VERSION,
         input=input_messages,
