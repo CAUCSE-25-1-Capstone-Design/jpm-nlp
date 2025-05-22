@@ -15,8 +15,9 @@ def print_debug(string):
     print("[Debug:"+ str(time.strftime(' %X'))+"] " + str(string), flush=True)
 
 def print_ui(string):
-    print("OUTPUT;END", flush=True)
+    print("OUTPUT;START", flush=True)
     print(string, flush=True)
+    print("OUTPUT;END", flush=True)
 
 
 def read_last_n_chars(file_path="log.txt", n_chars=2500):
